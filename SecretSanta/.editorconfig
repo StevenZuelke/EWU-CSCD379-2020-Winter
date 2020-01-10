@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CA1707: Remove the underscores from member name SecretSanta.Business.Tests.BusinessTests.Create_User_Success().
+dotnet_diagnostic.CA1707.severity = silent
