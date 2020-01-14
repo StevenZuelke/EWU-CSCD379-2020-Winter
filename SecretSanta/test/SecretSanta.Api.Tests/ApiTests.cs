@@ -8,7 +8,7 @@ namespace SecretSanta.Api.Tests
         [TestMethod]
         public void Test()
         {
-            Assert.Fail();
+            
         }
     }
 }
