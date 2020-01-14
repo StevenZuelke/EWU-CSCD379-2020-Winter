@@ -6,8 +6,9 @@ namespace SecretSanta.Api.Tests
     public class ApiTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Test()
         {
+            Assert.Fail();
         }
     }
 }

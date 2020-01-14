@@ -6,8 +6,9 @@ namespace SecretSanta.Data.Tests
     public class DataTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Tests()
         {
+            Assert.Fail();
         }
     }
 }
