@@ -15,7 +15,7 @@ namespace SecretSanta.Business
 #pragma warning restore CA1051 // Do not declare visible instance fields
 #pragma warning restore INTL0001 // Fields _PascalCase
 
-        public User(int id, string fname, string lname, IList<Gift> list)
+    public User(int id, string fname, string lname, IList<Gift> list)
         {
             this.Id = id;
             this.FirstName = fname;
