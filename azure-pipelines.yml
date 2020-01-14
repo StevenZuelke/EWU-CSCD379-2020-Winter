@@ -35,7 +35,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
-displayName: 'Run Tests'
-inputs:
-  command: 'test'
-  projects: '**/*Tests.csproj'
+  displayName: 'Run Tests'
+  inputs:
+    command: 'test'
+    projects: '**/*Tests.csproj'
