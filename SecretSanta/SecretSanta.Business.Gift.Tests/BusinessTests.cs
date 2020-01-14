@@ -10,9 +10,7 @@ namespace SecretSanta.Business.Tests
     {
         [TestMethod]
         //Test methods can contain underscores
-#pragma warning disable CA1707 // Identifiers should not contain underscores
         public void Create_Gift_Success()
-#pragma warning restore CA1707 // Identifiers should not contain underscores
         {
             //arrange
             int id = 0;
@@ -30,9 +28,7 @@ namespace SecretSanta.Business.Tests
             Assert.AreEqual<User>(user, gift.User, "User value is unexpected");
         }
         [TestMethod]
-#pragma warning disable CA1707 // Identifiers should not contain underscores ###Test method fine
         public void Create_User_Success()
-#pragma warning restore CA1707 // Identifiers should not contain underscores
         {
             //arrange
             int id = 0;

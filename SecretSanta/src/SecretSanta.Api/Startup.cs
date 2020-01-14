@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
-
+using SecretSanta.Business;
 namespace SecretSanta.Api
 {
     public class Startup
@@ -27,7 +27,7 @@ namespace SecretSanta.Api
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello from API!");
+                    await context.Response.WriteAsync("Hello from API!").ConfigureAwait(false);
                 });
             });
         }
