@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace SecretSanta.Business.Tests
 {
     [TestClass]
-    class UserTests
+    public class UserTests
     {
         [TestMethod]
         public void Create_User_Success()

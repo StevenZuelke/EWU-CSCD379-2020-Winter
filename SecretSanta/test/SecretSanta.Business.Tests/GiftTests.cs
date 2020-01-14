@@ -9,7 +9,7 @@ namespace SecretSanta.Business.Tests
     public class GiftTests
     {
         [TestMethod]
-            public void Create_Gift_Success()
+        public void Create_Gift_Success()
             {
                 //arrange
                 int id = 0;
