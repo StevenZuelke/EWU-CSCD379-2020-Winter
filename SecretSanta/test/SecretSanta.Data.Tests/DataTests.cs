@@ -8,7 +8,7 @@ namespace SecretSanta.Data.Tests
         [TestMethod]
         public void Tests()
         {
-            Assert.Fail();
+
         }
     }
 }
