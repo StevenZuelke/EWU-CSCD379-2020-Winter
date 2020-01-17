@@ -7,7 +7,7 @@ namespace SecretSanta.Data.Tests
     [TestClass]
     public class GiftTests
     {
-        [TestMethod]
+      /*  [TestMethod]
         public void Gift_CanBeCreate_AllPropertiesGetSet()
         {
             // Arrange
@@ -42,6 +42,6 @@ namespace SecretSanta.Data.Tests
         public void Gift_SetUrlToNull_ThrowsArgumentNullException()
         {
             Gift gift = new Gift(1, "Ring 2", "Amazing way to keep the creepers away", null!, new User(1, "Inigo", "Montoya", new List<Gift>()));
-        }
+        }*/
     }
 }

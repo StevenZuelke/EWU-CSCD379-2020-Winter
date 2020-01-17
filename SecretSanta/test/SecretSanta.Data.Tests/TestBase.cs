@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace SecretSanta.Data.Tests
 {
     public class TestBase
@@ -15,20 +16,21 @@ namespace SecretSanta.Data.Tests
         private SqliteConnection SqliteConnection { get; set; }
         protected DbContextOptions<ApplicationDbContext> Options { get; private set; }
 #nullable enable
-
+        //Console Logger Extra Credit
+        /*
         private static ILoggerFactory GetLoggerFactory()
         {
             IServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.AddLogging(builder =>
             {
-                builder.AddConsole()
+                builder.addConsole()
                     .AddFilter(DbLoggerCategory.Database.Command.Name,
                         LogLevel.Information);
             });
             return serviceCollection.BuildServiceProvider().
                 GetService<ILoggerFactory>();
         }
-
+        */
         [TestInitialize]
         public void OpenConnection()
         {
@@ -37,7 +39,7 @@ namespace SecretSanta.Data.Tests
 
             Options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseSqlite(SqliteConnection)
-                .UseLoggerFactory(GetLoggerFactory())
+                //.UseLoggerFactory(GetLoggerFactory())
                 .EnableSensitiveDataLogging()
                 .Options;
 

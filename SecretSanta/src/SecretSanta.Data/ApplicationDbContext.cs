@@ -22,7 +22,7 @@ namespace SecretSanta.Data
 #nullable disable
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         //Constructor with both options and httpAccessor
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
             HttpContextAccessor = httpContextAccessor;
         }
