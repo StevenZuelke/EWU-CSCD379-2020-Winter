@@ -9,6 +9,6 @@ namespace SecretSanta.Data
 #nullable disable
         public string Name { get; set; }
 #nullable enable
-        IList<UserGroup> UserGroups { get; set; }
+        public IList<UserGroup> UserGroups { get; set; }
     }
 }
