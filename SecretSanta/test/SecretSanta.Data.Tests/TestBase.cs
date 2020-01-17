@@ -20,10 +20,12 @@ namespace SecretSanta.Data.Tests
         /*
         private static ILoggerFactory GetLoggerFactory()
         {
+            
             IServiceCollection serviceCollection = new ServiceCollection();
+           
             serviceCollection.AddLogging(builder =>
             {
-                builder.addConsole()
+                builder.AddConsole()
                     .AddFilter(DbLoggerCategory.Database.Command.Name,
                         LogLevel.Information);
             });

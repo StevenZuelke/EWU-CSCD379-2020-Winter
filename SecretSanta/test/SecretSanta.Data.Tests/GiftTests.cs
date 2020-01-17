@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace SecretSanta.Data.Tests
 {
     [TestClass]
-    public class GiftTests
+    public class GiftTests:TestBase
     {
         [TestMethod]
         public async Task AddGift_WithUser_ShouldCreateForeignRelationship()
