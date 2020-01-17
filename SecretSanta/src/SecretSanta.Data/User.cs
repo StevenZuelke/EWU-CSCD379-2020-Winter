@@ -11,9 +11,11 @@ namespace SecretSanta.Data
         private string _FirstName = string.Empty;
         public string LastName { get => _LastName; set => _LastName = value ?? throw new ArgumentNullException(nameof(LastName)); }
         private string _LastName = string.Empty;
+#nullable disable //null check suppression
         public IList<UserGroup> UserGroups { get; set; }
         //Gifts read and write
         public ICollection<Gift> Gifts { get; set; }
+#nullable enable 
         //Nullable Santa Property
         public User? Santa { get; set; }
     }

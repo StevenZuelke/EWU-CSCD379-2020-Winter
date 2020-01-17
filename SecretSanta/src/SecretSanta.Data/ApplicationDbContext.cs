@@ -18,16 +18,19 @@ namespace SecretSanta.Data
         //Member variable for IHttpContextAccessor
         public IHttpContextAccessor HttpContextAccessor { get; set; }
         //Constructor with only options
+//Told to disable null checks in class this way
+#nullable disable
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         //Constructor with both options and httpAccessor
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor)
         {
             HttpContextAccessor = httpContextAccessor;
         }
+#nullable enable
         //Override OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserGroup>().HasKey(ug => new { ug.UserId, ug.GroupId });
+            _ = modelBuilder.Entity<UserGroup>().HasKey(ug => new { ug.UserId, ug.GroupId });
             //User set up
             modelBuilder.Entity<UserGroup>()
                 .HasOne(pt => pt.User)

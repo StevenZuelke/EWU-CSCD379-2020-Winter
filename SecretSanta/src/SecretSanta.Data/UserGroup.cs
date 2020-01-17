@@ -9,7 +9,9 @@ namespace SecretSanta.Data
     {
         public int UserId { get; set; }
         public int GroupId { get; set; }
+#nullable disable //Null check suppression 
         public User User { get; set; }
         public Group Group { get; set; }
+#nullable enable
     }
 }

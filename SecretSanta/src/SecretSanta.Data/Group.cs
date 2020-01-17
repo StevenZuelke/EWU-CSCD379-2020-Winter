@@ -6,9 +6,10 @@ namespace SecretSanta.Data
 {
     public class Group:FingerPrintEntityBase
     {
-#nullable disable
+#nullable disable //Null check suppression
         public string Name { get; set; }
-#nullable enable
         public IList<UserGroup> UserGroups { get; set; }
+#nullable enable
+
     }
 }
