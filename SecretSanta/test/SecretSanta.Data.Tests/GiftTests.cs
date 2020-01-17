@@ -1,47 +1,54 @@
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace SecretSanta.Data.Tests
 {
     [TestClass]
     public class GiftTests
     {
-      /*  [TestMethod]
-        public void Gift_CanBeCreate_AllPropertiesGetSet()
+        [TestMethod]
+        public async Task AddGift_WithUser_ShouldCreateForeignRelationship()
         {
+            var gift = new Gift
+            {
+                Title = "My Title",
+                Description = "my-desc",
+                Url = "UrlUrl.Url",
+            };
+            var user = new User
+            {
+                FirstName = "Inigo",
+                LastName = "Montoya",
+            };
             // Arrange
-            Gift gift = new Gift(1, "Ring 2", "Amazing way to keep the creepers away", "www.ring.com", new User(1, "Inigo", "Montoya", new List<Gift>()));
+            using (ApplicationDbContext dbContext = new ApplicationDbContext(Options))
+            {
+                gift.User = user;
 
-            // Act
+                dbContext.Gifts.Add(gift);
 
-            // Assert
-            Assert.AreEqual(1, gift.Id);
-            Assert.AreEqual("Ring 2", gift.Title);
-            Assert.AreEqual("Amazing way to keep the creepers away", gift.Description);
-            Assert.AreEqual("www.ring.com", gift.Url);
-            Assert.IsNotNull(gift.User);
+                await dbContext.SaveChangesAsync();
+            }
+
+            using (ApplicationDbContext dbContext = new ApplicationDbContext(Options))
+            {
+                var gifts = await dbContext.Gifts.Include(p => p.User).ToListAsync();
+                //var posts = await dbContext.Posts.ToListAsync();
+                Assert.AreEqual(1, gifts.Count);
+                Assert.AreEqual(gift.Title, gifts[0].Title);
+                Assert.AreNotEqual(0, gifts[0].Id);
+                //Assert.IsNotNull(posts[0].Author);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Gift_SetTitleToNull_ThrowsArgumentNullException()
-        {
-            Gift gift = new Gift(1, null!, "Amazing way to keep the creepers away", "www.ring.com", new User(1, "Inigo", "Montoya", new List<Gift>()));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Gift_SetDescriptionToNull_ThrowsArgumentNullException()
-        {
-            Gift gift = new Gift(1, "Ring 2", null!, "www.ring.com", new User(1, "Inigo", "Montoya", new List<Gift>()));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Gift_SetUrlToNull_ThrowsArgumentNullException()
-        {
-            Gift gift = new Gift(1, "Ring 2", "Amazing way to keep the creepers away", null!, new User(1, "Inigo", "Montoya", new List<Gift>()));
-        }*/
     }
 }
