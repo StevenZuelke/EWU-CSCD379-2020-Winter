@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace SecretSanta.Data.Tests
         protected DbContextOptions<ApplicationDbContext> Options { get; private set; }
 #nullable enable
         //Console Logger Extra Credit
-        /*
+        
         private static ILoggerFactory GetLoggerFactory()
         {
             
@@ -32,7 +33,7 @@ namespace SecretSanta.Data.Tests
             return serviceCollection.BuildServiceProvider().
                 GetService<ILoggerFactory>();
         }
-        */
+
         [TestInitialize]
         public void OpenConnection()
         {
@@ -41,7 +42,7 @@ namespace SecretSanta.Data.Tests
 
             Options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseSqlite(SqliteConnection)
-                //.UseLoggerFactory(GetLoggerFactory())
+                .UseLoggerFactory(GetLoggerFactory())
                 .EnableSensitiveDataLogging()
                 .Options;
 
