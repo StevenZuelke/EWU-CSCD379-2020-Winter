@@ -9,12 +9,13 @@ using System.Text;
 
 namespace SecretSanta.Data.Tests
 {
-    public abstract class TestBase
+    public class TestBase
     {
 #nullable disable
         private SqliteConnection SqliteConnection { get; set; }
         protected DbContextOptions<ApplicationDbContext> Options { get; private set; }
 #nullable enable
+
         private static ILoggerFactory GetLoggerFactory()
         {
             IServiceCollection serviceCollection = new ServiceCollection();
@@ -29,7 +30,7 @@ namespace SecretSanta.Data.Tests
         }
 
         [TestInitialize]
-        public void InitializeTests()
+        virtual public void TestInitialize()
         {
             SqliteConnection = new SqliteConnection("DataSource=:memory:");
             SqliteConnection.Open();
@@ -45,7 +46,7 @@ namespace SecretSanta.Data.Tests
         }
 
         [TestCleanup]
-        public void TeardownTests()
+        virtual public void TestCleanup()
         {
             SqliteConnection.Close();
         }

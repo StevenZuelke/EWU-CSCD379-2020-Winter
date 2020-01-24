@@ -1,26 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SecretSanta.Data;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SecretSanta.Business
 {
-    public class GiftService
+    public class GiftService : EntityService<Gift>, IGiftService
     {
-        private ApplicationDbContext DbContext { get; }
-        public GiftService(ApplicationDbContext dbContext)
+        public GiftService(ApplicationDbContext applicationDbContext, IMapper mapper) :
+            base(applicationDbContext, mapper)
         {
-            DbContext = dbContext;
         }
 
-        public async Task<Gift> InsertAsync(Gift gift)
-        {
-            EntityEntry<Gift> insertedEntity = DbContext.Gifts.Add(gift);
-            await DbContext.SaveChangesAsync();
-            return insertedEntity.Entity;
-        }
-        
+        public override async Task<Gift> FetchByIdAsync(int id) =>
+            await ApplicationDbContext.Set<Gift>().Include(nameof(Gift.User)).SingleAsync(item => item.Id == id);
     }
 }
