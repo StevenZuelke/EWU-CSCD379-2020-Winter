@@ -29,8 +29,8 @@ namespace SecretSanta.Data
         {
             _ = modelBuilder?.Entity<UserGroup>().HasKey(ug => new { ug.UserId, ug.GroupId });
 
-            modelBuilder?.Entity<UserGroup>().HasOne(ug => ug.User).WithMany(u => u.UserGroups).HasForeignKey(ug => ug.UserId);
-            modelBuilder?.Entity<UserGroup>().HasOne(ug => ug.Group).WithMany(u => u.UserGroups).HasForeignKey(ug => ug.GroupId);
+            modelBuilder?.Entity<UserGroup>().HasOne(ug => ug.User).WithMany((System.Linq.Expressions.Expression<Func<User, IEnumerable<UserGroup>>>)(u => (IEnumerable<UserGroup>)u.UserGroups)).HasForeignKey(ug => ug.UserId);
+            modelBuilder?.Entity<UserGroup>().HasOne(ug => ug.Group).WithMany((System.Linq.Expressions.Expression<Func<Group, IEnumerable<UserGroup>>>)(u => (IEnumerable<UserGroup>)u.UserGroups)).HasForeignKey(ug => ug.GroupId);
         }
 
         public override int SaveChanges()

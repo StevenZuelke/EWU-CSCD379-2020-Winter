@@ -5,6 +5,7 @@ using SecretSanta.Business;
 
 namespace SecretSanta.Business.Tests
 {
+    //Chose to not refactor sample data for this class (Didn't think it applied)
     [TestClass]
     public class AutomapperProfileConfigurationTests
     {
@@ -19,7 +20,7 @@ namespace SecretSanta.Business.Tests
         }
 
         [TestMethod]
-        public void Map_Author_SuccessWithNoIdMapped()
+        public void Map_Gift_SuccessWithNoIdMapped()
         {
             (Gift source, Gift target) = (
                 new MockGift(42, "Title", "Description", "Url"), new MockGift(0, "Invalid", "Invalid", "Invalid"));

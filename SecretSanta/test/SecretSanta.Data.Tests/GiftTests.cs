@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SecretSanta.Data.Tests
 {
+    //REFACTORED IN SAMPLEDATA
     [TestClass]
     public class GiftTests : TestBase
     {
@@ -18,13 +19,7 @@ namespace SecretSanta.Data.Tests
             // Arrange
             using (var dbContext = new ApplicationDbContext(Options))
             {
-                dbContext.Gifts.Add(new Gift
-                (
-                    "Ring Doorbell",
-                    "www.ring.com",
-                    "The doorbell that saw too much",
-                    new User("Inigo", "Montoya")
-                )); ;
+                dbContext.Gifts.Add(SampleData.CreateGift1());
                 await dbContext.SaveChangesAsync().ConfigureAwait(false);
             }
             // Act
@@ -34,9 +29,9 @@ namespace SecretSanta.Data.Tests
                 var gifts = await dbContext.Gifts.ToListAsync();
 
                 Assert.AreEqual(1, gifts.Count);
-                Assert.AreEqual("Ring Doorbell", gifts[0].Title);
-                Assert.AreEqual("www.ring.com", gifts[0].Url);
-                Assert.AreEqual("The doorbell that saw too much", gifts[0].Description);
+                Assert.AreEqual(SampleData.Title1, gifts[0].Title);
+                Assert.AreEqual(SampleData.Url1, gifts[0].Url);
+                Assert.AreEqual(SampleData.Desc1, gifts[0].Description);
             }
         }
         [TestMethod]
@@ -77,13 +72,7 @@ namespace SecretSanta.Data.Tests
             // Arrange
             using (var dbContext = new ApplicationDbContext(Options))
             {
-                dbContext.Gifts.Add(new Gift
-                (
-                    "Ring Doorbell",
-                    "www.ring.com",
-                    "The doorbell that saw too much",
-                    new User("Inigo", "Montoya")
-                )); ;
+                dbContext.Gifts.Add(SampleData.CreateGift1());
                 await dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             }
@@ -92,9 +81,9 @@ namespace SecretSanta.Data.Tests
             {
                 //Change Title
                 var gift = await dbContext.Gifts.SingleOrDefaultAsync();
-                Assert.AreEqual("Ring Doorbell", gift.Title);
-                Assert.AreEqual("www.ring.com", gift.Description);
-                Assert.AreEqual("The doorbell that saw too much", gift.Url);
+                Assert.AreEqual(SampleData.Title1, gift.Title);
+                Assert.AreEqual(SampleData.Desc1, gift.Description);
+                Assert.AreEqual(SampleData.Url1, gift.Url);
 
                 gift.Title = "New Title";
                 await dbContext.SaveChangesAsync().ConfigureAwait(false);
@@ -112,13 +101,7 @@ namespace SecretSanta.Data.Tests
             // Arrange
             using (var dbContext = new ApplicationDbContext(Options))
             {
-                dbContext.Gifts.Add(new Gift
-                (
-                    "Ring Doorbell",
-                    "www.ring.com",
-                    "The doorbell that saw too much",
-                    new User("Inigo", "Montoya")
-                )); ;
+                dbContext.Gifts.Add(SampleData.CreateGift1());
                 await dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             }
@@ -127,10 +110,10 @@ namespace SecretSanta.Data.Tests
             {
                 //Change User
                 var gift = await dbContext.Gifts.Include(g => g.User).SingleOrDefaultAsync();
-                Assert.AreEqual("Ring Doorbell", gift.Title);
-                Assert.AreEqual("www.ring.com", gift.Description);
-                Assert.AreEqual("The doorbell that saw too much", gift.Url);
-                Assert.AreEqual("Inigo", gift.User.FirstName);
+                Assert.AreEqual(SampleData.Title1, gift.Title);
+                Assert.AreEqual(SampleData.Desc1, gift.Description);
+                Assert.AreEqual(SampleData.Url1, gift.Url);
+                Assert.AreEqual(SampleData.Inigo, gift.User.FirstName);
                 gift.User.FirstName = "New Name";
                 await dbContext.SaveChangesAsync().ConfigureAwait(false);
             }
@@ -149,13 +132,7 @@ namespace SecretSanta.Data.Tests
             // Arrange
             using (var dbContext = new ApplicationDbContext(Options))
             {
-                dbContext.Gifts.Add(new Gift
-                (
-                    "Ring Doorbell",
-                    "www.ring.com",
-                    "The doorbell that saw too much",
-                    new User("Inigo", "Montoya")
-                )); ;
+                dbContext.Gifts.Add(SampleData.CreateGift1());
                 await dbContext.SaveChangesAsync().ConfigureAwait(false);
 
             }

@@ -7,6 +7,7 @@ namespace SecretSanta.Data
 {
     public class FingerPrintEntityBase : EntityBase
     {
+        //Encapsulated
         [Required]
         public string? CreatedBy { get; set; } = "";
         [Required]
