@@ -21,10 +21,10 @@ namespace SecretSanta.Api.Tests.Controllers
         public void Create_GiftController_Success()
         {
             //Arrange
-            var service = new Mock<GiftService>();
+            var service = new Mock<IGiftService>();
 
             //Act
-            _ = new Mock<GiftController>(service);
+            _ = new GiftController(service.Object);
 
             //Assert
         }
@@ -55,7 +55,7 @@ namespace SecretSanta.Api.Tests.Controllers
             await service.Object.InsertAsync(gift);
             // Act
             ActionResult<Gift> rv = await controller.Get(gift.Id);
-
+            //rv.Result
             // Assert
             Assert.IsTrue(rv.Result is OkObjectResult);
         }
