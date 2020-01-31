@@ -54,10 +54,28 @@ namespace SecretSanta.Api.Tests.Controllers
            var controller = new GiftController(service.Object);
             await service.Object.InsertAsync(gift);
             // Act
-            ActionResult<Gift> rv = await controller.Get(gift.Id);
-            //rv.Result
+            ActionResult<Gift> result = await controller.Get(gift.Id);
+            OkObjectResult okResult = (OkObjectResult)result.Result;
+            Gift giftResult = (Gift)okResult.Value;
             // Assert
-            Assert.IsTrue(rv.Result is OkObjectResult);
+            Assert.AreEqual(gift.Description, giftResult.Description);
+            Assert.IsTrue(result.Result is OkObjectResult);
+        }
+
+        [TestMethod]
+        public async Task GetById_WithoutGifts_Fail()
+        {
+            // Arrange
+            var service = new Mock<IGiftService>();
+            int id = 0;
+#nullable disable //Well aware that Gift can't be null this part is suppposed to cause failure
+            _ = service.Setup(m => m.FetchByIdAsync(id)).ReturnsAsync((Gift)null);
+#nullable enable
+            var controller = new GiftController(service.Object);
+            // Act
+            ActionResult<Gift> result = await controller.Get(id);
+            // Assert
+            Assert.IsTrue(result.Result is NotFoundResult);
         }
 
         [TestMethod]
@@ -96,14 +114,69 @@ namespace SecretSanta.Api.Tests.Controllers
             var service = new Mock<IGiftService>();
             Gift gift = SampleData.CreateGift1();
             int id = 2;
-            service.Setup(m => m.UpdateAsync(id, gift)).ReturnsAsync(PutHelper(id,gift));
+            service.Setup(m => m.UpdateAsync(id, gift)).ReturnsAsync(PutHelper(id, gift));
+            service.Setup(m => m.FetchByIdAsync(id)).ReturnsAsync(FetchHelper(id));
             var controller = new GiftController(service.Object);
             // Act
-            ActionResult<Gift> ar = await controller.Put(id, gift);
+            ActionResult<Gift> result = await controller.Put(id, gift);
+            OkObjectResult okResult = (OkObjectResult)result.Result;
+            Gift giftResult = (Gift)okResult.Value;
             // Assert
-            Assert.IsTrue(ar.Result is OkObjectResult);
-            Gift newGift = ar.Value;
-            Assert.AreEqual(newGift.Id,id);
+            Assert.IsTrue(result.Result is OkObjectResult);
+            Assert.AreEqual(giftResult.Id,id);
+        }
+
+        [TestMethod]
+        public async Task Put_IndexOutofBounds_Fail()
+        {
+            // Arrange
+            var service = new Mock<IGiftService>();
+            int id = 2;
+            Gift gift = SampleData.CreateGift1();
+#nullable disable //Well aware that Gift can't be null this part is suppposed to cause failure
+            _ = service.Setup(m => m.FetchByIdAsync(id)).ReturnsAsync((Gift)null);
+#nullable enable
+            service.Setup(m => m.UpdateAsync(id, gift)).ReturnsAsync(PutHelper(id, gift));
+            var controller = new GiftController(service.Object);
+            // Act
+            ActionResult<Gift> result = await controller.Put(id,gift);
+            // Assert
+            Assert.IsTrue(result.Result is NotFoundResult);
+        }
+
+        [TestMethod]
+        public async Task Delete_Gift_Success()
+        {
+            // Arrange
+            var service = new Mock<IGiftService>();
+            int id = 2;
+            service.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
+            service.Setup(m => m.FetchByIdAsync(id)).ReturnsAsync(FetchHelper(id));
+            var controller = new GiftController(service.Object);
+            // Act
+            ActionResult<bool> result = await controller.Delete(id);
+            OkObjectResult okResult = (OkObjectResult)result.Result;
+            bool boolResult = (bool)okResult.Value;
+            // Assert
+            Assert.IsTrue(result.Result is OkObjectResult);
+            Assert.AreEqual(boolResult, true);
+        }
+
+        [TestMethod]
+        public async Task Delete_GiftOutOfBounds_Fail()
+        {
+            // Arrange
+            var service = new Mock<IGiftService>();
+            int id = 2;
+            service.Setup(m => m.DeleteAsync(id)).ReturnsAsync(true);
+#nullable disable //Well aware that Gift can't be null this part is suppposed to cause failure
+            _ = service.Setup(m => m.FetchByIdAsync(id)).ReturnsAsync((Gift)null);
+#nullable enable
+            var controller = new GiftController(service.Object);
+            // Act
+            ActionResult<bool> result = await controller.Delete(id);
+            // Assert
+            Assert.IsTrue(result.Result is NotFoundResult);
         }
         //Update gift and return new Val
         private Gift PutHelper(int id, Gift gift)
@@ -114,7 +187,7 @@ namespace SecretSanta.Api.Tests.Controllers
         //Create new gift by specified ID
         private Gift FetchHelper(int id)
         {
-            Gift newGift = new Gift("Title", "Desc", "Url",SampleData.CreateInigoMontoya());
+            Gift newGift = SampleData.CreateGift1();
             Gift testGift = new TestGift(newGift, id);
             return testGift;
         }
@@ -128,56 +201,15 @@ namespace SecretSanta.Api.Tests.Controllers
             }
             return gifts;
         }
+       
 
     }
 
-    /*
-    public class GiftService : IGiftService
-    {
-        private Dictionary<int, Gift> Items { get; } = new Dictionary<int, Gift>();
-
-        public Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Gift>> FetchAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Gift?> FetchByIdAsync(int id)
-        {
-            if (Items.TryGetValue(id, out Gift? gift))
-            {
-                Task<Gift?> t1 = Task.FromResult<Gift?>(gift);
-                return t1;
-            }
-            Task<Gift?> t2 = Task.FromResult<Gift?>(null);
-            return t2;
-        }
-
-        public Task<Gift> InsertAsync(Gift entity)
-        {
-            int id = Items.Count + 1;
-            Items[id] = new TestGift(entity, id);
-            return Task.FromResult(Items[id]);
-        }
-
-        public Task<Gift[]> InsertAsync(params Gift[] entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Gift?> UpdateAsync(int id, Gift entity)
-        {
-            throw new NotImplementedException();
-        }
-    }*/
+    
     public class TestGift : Gift
     {
         public TestGift(Gift gift, int id)
-            : base(gift.Title, gift.Description, gift.Url, gift.User)
+            : base((gift?? throw new ArgumentNullException(nameof(gift))).Title,  gift.Url, gift.Description, gift.User)
         {
             Id = id;
         }

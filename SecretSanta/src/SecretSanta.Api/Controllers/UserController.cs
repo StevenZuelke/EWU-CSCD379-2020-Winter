@@ -54,9 +54,9 @@ namespace SecretSanta.Api.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<User>> Put(int id, [FromBody] User value)
         {
-            if (await UserService.FetchByIdAsync(id) is User user)
+            if (await UserService.FetchByIdAsync(id) is User)
             {
-                return Ok(UserService.UpdateAsync(id, value));
+                return Ok(await UserService.UpdateAsync(id, value));
             }
             return NotFound();
         }
@@ -66,11 +66,11 @@ namespace SecretSanta.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<User>> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
-            if (await UserService.FetchByIdAsync(id) is User user)
+            if (await UserService.FetchByIdAsync(id) is User)
             {
-                return Ok(UserService.DeleteAsync(id));
+                return Ok(await UserService.DeleteAsync(id));
             }
             return NotFound();
         }

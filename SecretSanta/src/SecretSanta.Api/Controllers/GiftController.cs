@@ -54,9 +54,9 @@ namespace SecretSanta.Api.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Gift>> Put(int id, [FromBody] Gift value)
         {
-            if (await GiftService.FetchByIdAsync(id) is Gift gift)
+            if (await GiftService.FetchByIdAsync(id) is Gift)
             {
-                return Ok(GiftService.UpdateAsync(id, value));
+                return Ok(await GiftService.UpdateAsync(id, value));
             }
             return NotFound();
         }
@@ -66,11 +66,11 @@ namespace SecretSanta.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<Gift>> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
-            if (await GiftService.FetchByIdAsync(id) is Gift gift)
+            if (await GiftService.FetchByIdAsync(id) is Gift)
             {
-                return Ok(GiftService.DeleteAsync(id));
+                return Ok(await GiftService.DeleteAsync(id));
             }
             return NotFound();
         }

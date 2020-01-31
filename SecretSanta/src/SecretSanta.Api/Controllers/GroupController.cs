@@ -54,9 +54,9 @@ namespace SecretSanta.Api.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Group>> Put(int id, [FromBody] Group value)
         {
-            if (await GroupService.FetchByIdAsync(id) is Group group)
+            if (await GroupService.FetchByIdAsync(id) is Group)
             {
-                return Ok(GroupService.UpdateAsync(id, value));
+                return Ok(await GroupService.UpdateAsync(id, value));
             }
             return NotFound();
         }
@@ -66,11 +66,11 @@ namespace SecretSanta.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<Group>> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
-            if (await GroupService.FetchByIdAsync(id) is Group group)
+            if (await GroupService.FetchByIdAsync(id) is Group)
             {
-                return Ok(GroupService.DeleteAsync(id));
+                return Ok(await GroupService.DeleteAsync(id));
             }
             return NotFound();
         }

@@ -7,6 +7,9 @@ using SecretSanta.Business;
 using SecretSanta.Business.Services;
 using SecretSanta.Data;
 using AutoMapper;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+
 namespace SecretSanta.Api
 {
     // Justification: Disable until ConfigureServices is added back.
@@ -18,6 +21,13 @@ namespace SecretSanta.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var sqliteConnection = new SqliteConnection("DataSource=:memory:");
+            sqliteConnection.Open();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.EnableSensitiveDataLogging()
+                       .UseSqlite(sqliteConnection));
+
             //Setup Dependency Injection and Register services
             services.AddScoped<IGiftService, GiftService>();
             services.AddScoped<IUserService, UserService>();
@@ -25,7 +35,11 @@ namespace SecretSanta.Api
             services.AddDbContext<ApplicationDbContext>();
 
             //NSwagger
-            services.AddMvc();
+            System.Type profileType = typeof(AutomapperConfigurationProfile);
+            System.Reflection.Assembly assembly = profileType.Assembly;
+            services.AddAutoMapper(new[] { assembly });
+
+            services.AddMvc(opts => opts.EnableEndpointRouting = false);
             services.AddSwaggerDocument();
         }
 
@@ -37,20 +51,11 @@ namespace SecretSanta.Api
                 app.UseDeveloperExceptionPage();
             }
             //NSwagger
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
-            
-
             app.UseRouting();
-           
-
-            app.UseEndpoints(endpoints =>
-            {
-                _ = endpoints.MapGet("/", async context =>
-                  {
-                      await context.Response.WriteAsync("Hello from API!");
-                  });
-            });
+            app.UseOpenApi();
+            //http://localhost/swagger
+            app.UseSwaggerUi3();
+            app.UseMvc();           
         }
     }
 }
