@@ -18,7 +18,7 @@ namespace SecretSanta.Business.Services
         protected IMapper Mapper { get; }
 
         protected virtual IQueryable<TEntity> Query => DbContext.Set<TEntity>();
-        
+
         public EntityService(ApplicationDbContext dbContext, IMapper mapper)
         {
             DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));

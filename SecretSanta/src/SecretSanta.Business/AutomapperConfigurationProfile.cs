@@ -8,6 +8,14 @@ namespace SecretSanta.Business
     {
         public AutomapperConfigurationProfile()
         {
+            //Add Automappers for Dtos
+            CreateMap<Gift, Dto.Gift>();
+            CreateMap<Group, Dto.Group>();
+            CreateMap<User, Dto.User>();
+            CreateMap<Dto.GiftInput, Gift>();
+            CreateMap<Dto.UserInput, User>();
+            CreateMap<Dto.GroupInput, Group>();
+
             CreateMap<Gift, Gift>().ForMember(property => property.Id, option => option.Ignore());
             CreateMap<User, User>().ForMember(property => property.Id, option => option.Ignore());
         }
