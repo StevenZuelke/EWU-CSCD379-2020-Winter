@@ -11,7 +11,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using SecretSanta.Business.Services;
 
-namespace SecretSanta.Web
+namespace SecretSanta.Api
 {
     public class Startup
     {
