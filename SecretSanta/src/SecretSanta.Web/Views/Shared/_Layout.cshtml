@@ -1,22 +1,30 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    
+    <style>
+        input.input-validation-error {
+            border-color: red;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a asp-controller="Gift">Gifts</a></li>
-                <li><a asp-controller="User">Users</a></li>
-                <li><a asp-controller="Group">Groups</a></li>
+                <li><a asp-controller="Gifts" asp-action="Index">Gifts</a></li>
+                <li><a asp-controller="Users" asp-action="Index">Users</a></li>
+                <li><a asp-controller="Groups" asp-action="Index">Groups</a></li>
             </ul>
         </nav>
     </header>
     <div>
         @RenderBody()
     </div>
+    
+    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,22 @@
+﻿@model User
+
+<table class="table">
+    
+    <tbody>
+       <tr>
+           <td asp-display-for="@Model.Id">Id: </td>
+           <td asp-display-for="@Model.FirstName">First Name: </td>
+           <td asp-display-for="@Model.LastName">Last Name: </td>
+           <td>
+               <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+               <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+
+           </td>
+       </tr>
+        
+    </tbody>
+</table>
+
+<div class="control">
+    <a asp-action="Index" class="button is-light">Go Back</a>
+</div>
