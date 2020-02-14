@@ -39,9 +39,14 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(UserInput userInput)
         {
-            var createdUser = await Client.PostAsync(userInput);
+            ActionResult result = View(userInput);
+            if (ModelState.IsValid)
+            {
+                var createdUser = await Client.PostAsync(userInput);
 
-            return RedirectToAction(nameof(Index));
+                result = RedirectToAction(nameof(Index));
+            }
+            return result;
         }
 
         //UPDATE: User
@@ -56,9 +61,14 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(int id, UserInput userInput)
         {
-            var updatedUser = await Client.PutAsync(id, userInput);
+            ActionResult result = View(userInput);
+            if (ModelState.IsValid)
+            {
+                var updatedUser = await Client.PutAsync(id, userInput);
 
-            return RedirectToAction(nameof(Index));
+                result = RedirectToAction(nameof(Index));
+            }
+            return result;
         }
 
 
@@ -73,12 +83,22 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(User user)
         {
-            if (user != null)
+            ActionResult result = View(user);
+            try
             {
-                await Client.DeleteAsync(user.Id);
-            }
+                if (user != null)
+                {
+                    if (await Client.GetAsync(user.Id) != null)
+                    {
+                        await Client.DeleteAsync(user.Id);
+                        result = RedirectToAction(nameof(Index));
+                        ModelState.AddModelError("Id", "Not Correct Id");
+                    }
+                }
 
-            return RedirectToAction(nameof(Index));
+            }
+            catch (NullReferenceException e) { Console.WriteLine(e.Message); }
+            return result;
         }
     }
 }

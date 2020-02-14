@@ -39,9 +39,14 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(GroupInput groupInput)
         {
-            var createdGroup = await Client.PostAsync(groupInput);
+            ActionResult result = View(groupInput);
+            if (ModelState.IsValid)
+            {
+                var createdGroup = await Client.PostAsync(groupInput);
 
-            return RedirectToAction(nameof(Index));
+                result = RedirectToAction(nameof(Index));
+            }
+            return result;
         }
 
         //UPDATE: Group
@@ -56,9 +61,14 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(int id, GroupInput groupInput)
         {
-            var updatedGroup = await Client.PutAsync(id, groupInput);
+            ActionResult result = View(groupInput);
+            if (ModelState.IsValid)
+            {
+                var updatedGroup = await Client.PutAsync(id, groupInput);
 
-            return RedirectToAction(nameof(Index));
+                result = RedirectToAction(nameof(Index));
+            }
+            return result;
         }
 
 
@@ -73,12 +83,22 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(Group group)
         {
-            if (group != null)
+            ActionResult result = View(group);
+            try
             {
-                await Client.DeleteAsync(group.Id);
+                if (group != null)
+                {
+                    if (await Client.GetAsync(group.Id) != null)
+                    {
+                        await Client.DeleteAsync(group.Id);
+                        result = RedirectToAction(nameof(Index));
+                        ModelState.AddModelError("Id", "Not Correct Id");
+                    }
+                }
+
             }
-            
-            return RedirectToAction(nameof(Index));
+            catch (NullReferenceException e) { Console.WriteLine(e.Message); }
+            return result;
         }
     }
 }

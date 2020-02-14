@@ -1551,10 +1551,12 @@ namespace SecretSanta.Web.Api
         [System.ComponentModel.DataAnnotations.Required]
         public string Title { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
         public string Description { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
         public string Url { get; set; }
 
         [Newtonsoft.Json.JsonProperty("userId", Required = Newtonsoft.Json.Required.Always)]
@@ -1624,7 +1626,8 @@ namespace SecretSanta.Web.Api
         [System.ComponentModel.DataAnnotations.Required]
         public string FirstName { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("lastName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("lastName", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
         public string LastName { get; set; }
 
         [Newtonsoft.Json.JsonProperty("santaId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]

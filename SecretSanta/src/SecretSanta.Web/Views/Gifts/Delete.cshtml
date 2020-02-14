@@ -1,9 +1,11 @@
 ﻿@model Gift
 
     <form asp-route="Delete">
+        <div asp-validation-summary="All"></div>
         <input type="hidden" asp-for="Title" />
         <div class="field">
             <label class="label" asp-for="Id">Id</label>
+            <span asp-validation-for="Id"></span>
             <div class="control">
                 <input class="input" type="text" asp-for="Id" />
             </div>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SecretSanta.Business;
 using SecretSanta.Web.Api;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,15 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(GiftInput giftInput)
         {
-            var createdGift = await Client.PostAsync(giftInput);
+            ActionResult result = View(giftInput);
 
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                var createdGift = await Client.PostAsync(giftInput);
+                result = RedirectToAction(nameof(Index));
+            }
+
+            return result;
         }
 
         //UPDATE: Gift
@@ -56,9 +63,14 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(int id, GiftInput giftInput)
         {
-            var updatedGift = await Client.PutAsync(id, giftInput);
+            ActionResult result = View(giftInput);
+            if (ModelState.IsValid)
+            {
+                var updatedGift = await Client.PutAsync(id, giftInput);
 
-            return RedirectToAction(nameof(Index));
+                result = RedirectToAction(nameof(Index));
+            }
+            return result;
         }
 
         
@@ -73,12 +85,22 @@ namespace SecretSanta.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Delete(Gift gift)
         {
-            if(gift != null)
+            ActionResult result = View(gift);
+            try
             {
-                await Client.DeleteAsync(gift.Id);
+                if(gift != null)
+                {
+                    if (await Client.GetAsync(gift.Id) != null)
+                    {
+                        await Client.DeleteAsync(gift.Id);
+                        result = RedirectToAction(nameof(Index));
+                        ModelState.AddModelError("Id", "Not Correct Id");
+                    }
+                }
+                
             }
-
-            return RedirectToAction(nameof(Index));
+            catch (NullReferenceException e) { Console.WriteLine(e.Message); }
+            return result;
         }
     }
 }
