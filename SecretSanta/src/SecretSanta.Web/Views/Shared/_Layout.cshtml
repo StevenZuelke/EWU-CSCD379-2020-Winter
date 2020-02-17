@@ -4,7 +4,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <!-- Stylesheets -->
     
+    <link href="~/css/main.5bee64600288a873e085.css" rel="stylesheet" />
+    
+    <!-- End Stylesheets -->
     <style>
         input.input-validation-error {
             border-color: red;
@@ -15,16 +19,20 @@
     <header>
         <nav>
             <ul>
-                <li><a asp-controller="Gifts" asp-action="Index">Gifts</a></li>
-                <li><a asp-controller="Users" asp-action="Index">Users</a></li>
-                <li><a asp-controller="Groups" asp-action="Index">Groups</a></li>
+                <li><a asp-controller="Gifts">Gifts</a></li>
+                <li><a asp-controller="Users">Users</a></li>
+                <li><a asp-controller="Groups">Groups</a></li>
             </ul>
         </nav>
     </header>
     <div>
         @RenderBody()
     </div>
+    <!-- Scripts -->
     
+    <script src="~/js/main.5bee64600288a873e085.js"></script>
+    
+    <!-- End Scripts -->
     @RenderSection("scripts", required: false)
 </body>
 </html>
