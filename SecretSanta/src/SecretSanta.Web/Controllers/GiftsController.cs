@@ -24,6 +24,11 @@ namespace SecretSanta.Web.Controllers
             return View(gifts);
         }
 
+        public ActionResult ListGifts()
+        {
+            return View();
+        }
+
         public ActionResult Create()
         {
             return View();
