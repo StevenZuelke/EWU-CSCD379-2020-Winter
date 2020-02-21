@@ -67,7 +67,10 @@ namespace SecretSanta.Web.Controllers
                 var gift = new Gift
                 {
                     Id = id,
+                    //This warning came with the assignment
+#pragma warning disable CA1062 // Validate arguments of public methods
                     Description = giftInput.Description,
+#pragma warning restore CA1062 // Validate arguments of public methods
                     Title = giftInput.Title,
                     Url = giftInput.Url,
                     UserId = giftInput.UserId

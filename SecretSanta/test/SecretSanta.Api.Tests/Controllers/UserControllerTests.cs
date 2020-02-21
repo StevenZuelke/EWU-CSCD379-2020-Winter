@@ -29,7 +29,10 @@ namespace SecretSanta.Api.Tests.Controllers
             return new User
             {
                 Id = NextId++,
+                //This warning came with the assignment
+#pragma warning disable CA1062 // Validate arguments of public methods
                 FirstName = dto.FirstName,
+#pragma warning restore CA1062 // Validate arguments of public methods
                 LastName = dto.LastName
             };
         }
