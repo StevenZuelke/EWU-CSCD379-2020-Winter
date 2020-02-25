@@ -15,7 +15,7 @@ export const hello = () => "Hello world!";
 export class App {
     async renderGifts() {
         await this.deleteAllGifts();
-        //await this.AddUserOne();
+        await this.AddUserOne();
         await this.fillGifts();
         var gifts = await this.getAllGifts();
         const itemList = document.getElementById("giftList");
@@ -36,20 +36,16 @@ export class App {
         this.userClient = new UserClient();
     }
 
-    /*async AddUserOne() {
-        var users = await this.getAllUsers();
-        for (let index = 0; index < users.length; index++) {
-            await this.userClient.delete(users[index].id);
-        }
+    async AddUserOne() {
         var user = new UserInput();
         user.firstName = "FirstName";
         user.lastName = "LastName";
         await this.userClient.post(user);
         var userAll = await this.userClient.getAll();
-        var userOne = userAll[1];
-       // this.userId = userOne.id;
-        this.userId = 10;
-    }*/
+        var userOne = userAll[0];
+        this.userId = userOne.id;
+        //this.userId = 10;
+    }
 
     async deleteAllGifts() {
         var gifts = await this.getAllGifts();
@@ -72,9 +68,9 @@ export class App {
         const url = "Url ";
         for (let index = 0; index < 10; index++) {
             var giftIn = new Gift();
-            giftIn.title = title;
-            giftIn.description = desc;
-            giftIn.url = url;
+            giftIn.title = title + index;
+            giftIn.description = desc + index;
+            giftIn.url = url + index ;
             giftIn.userId = 1;
             giftIn.id = index;
             await this.giftClient.post(giftIn);
