@@ -1,5 +1,12 @@
 ﻿import '../styles/site.scss';
 import { App } from './app';
+import Vue from 'vue';
+
+import Blah from './blah.vue';
+
+new Vue({
+    render: h => h(Blah)
+}).$mount('#blah');
 import { Gift } from './secretsanta-client';
 
 document.addEventListener("DOMContentLoaded", async () => {
