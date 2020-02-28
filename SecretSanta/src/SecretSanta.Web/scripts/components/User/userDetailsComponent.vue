@@ -14,10 +14,10 @@
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <button id="submit" class="button is-primary" @click.once="saveUser">Submit</button>
+                <button id="submit" class="button" @click.once="saveUser">Submit</button>
             </div>
             <div class="control">
-                <a class="button is-light" @click="cancelEdit">Cancel</a>
+                <a class="button is-primary" @click="cancelEdit">Cancel</a>
             </div>
         </div>
     </div>

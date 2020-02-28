@@ -17,8 +17,8 @@
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>
-                    <button @click='setUser(user)'>Edit</button>
-                    <button @click='deleteUser(user)'>Delete</button>
+                    <button class="button is-light" @click='setUser(user)'>Edit</button>
+                    <button class="button is-primary" @click='deleteUser(user)'>Delete</button>
                 </td>
             </tr>
             
