@@ -69,7 +69,10 @@ namespace SecretSanta.Web.Controllers
                 var group = new Group
                 {
                     Id = id,
+                    //came with assignment
+#pragma warning disable CA1062 // Validate arguments of public methods
                     Title = groupInput.Title
+#pragma warning restore CA1062 // Validate arguments of public methods
                 };
 
                 result = View(group);

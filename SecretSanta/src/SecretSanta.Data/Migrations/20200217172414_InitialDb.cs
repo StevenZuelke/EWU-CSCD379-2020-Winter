@@ -7,7 +7,10 @@ namespace SecretSanta.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            //came with assignment
+#pragma warning disable CA1062 // Validate arguments of public methods
             migrationBuilder.CreateTable(
+#pragma warning restore CA1062 // Validate arguments of public methods
                 name: "Groups",
                 columns: table => new
                 {
@@ -117,7 +120,10 @@ namespace SecretSanta.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            //came with assignment
+#pragma warning disable CA1062 // Validate arguments of public methods
             migrationBuilder.DropTable(
+#pragma warning restore CA1062 // Validate arguments of public methods
                 name: "Gifts");
 
             migrationBuilder.DropTable(

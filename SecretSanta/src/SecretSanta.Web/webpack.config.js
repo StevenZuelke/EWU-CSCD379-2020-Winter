@@ -114,5 +114,6 @@ module.exports = (env, argv) => {
                 srcPath
             ]
         },
+        devtool: '#eval-source-map'
     };
 };
