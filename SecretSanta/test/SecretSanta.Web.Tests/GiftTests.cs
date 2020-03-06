@@ -1,21 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SecretSanta.Business;
-using SecretSanta.Business.Dto;
-using SecretSanta.Business.Services;
-using SecretSanta.Data;
 using SecretSanta.Web.Api;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing.Imaging;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 
 namespace SecretSanta.Web.Tests
@@ -29,7 +22,8 @@ namespace SecretSanta.Web.Tests
         [NotNull]
         private IWebDriver? Driver { get; set; }
 
-        string AppURL { get; } = "https://localhost:5001/";
+        string AppURL { get; } = "https://localhost:44394/";
+        //string AppURL { get; } = "https://localhost:5001/";
 
         [TestInitialize]
         public void TestInitialize()
@@ -66,34 +60,21 @@ namespace SecretSanta.Web.Tests
         public async System.Threading.Tasks.Task CreateNewGiftAsync()
         {
             //Arrange
-            
-            //UserClient userClient = new UserClient(httpClient);
-            //Api.UserInput userInput = new Api.UserInput();
-            //userInput.FirstName = "Steve";
-            //userInput.LastName = "Zuelke";
-            //await userClient.PostAsync(userInput);
-            //UserService user
-            //IMapper mapper = AutomapperConfigurationProfile.CreateMapper();
-            //SqliteConnection SqliteConnection = new SqliteConnection("DataSource=:SecretSanta.db:");
-            //SqliteConnection.Open();
-            //var Options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            //                .UseSqlite(SqliteConnection)
-            //                .UseLoggerFactory(GetLoggerFactory())
-            //                .EnableSensitiveDataLogging()
-            //                .Options;
-            //using (var context = new ApplicationDbContext(Options))
-            //{
-            //    context.Database.EnsureCreated();
-            //
-            //    UserService userService = new UserService(context, mapper);
-            //    UserInput userInput = new UserInput();
-            //    userInput.FirstName = "Steve";
-            //    userInput.LastName = "Zuelke";
-            //    await userService.InsertAsync(userInput);
-            //}
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("https://localhost:44388/");
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            UserClient userClient = new UserClient(httpClient);
+            Api.UserInput userInput = new Api.UserInput();
+            userInput.FirstName = "Steve";
+            userInput.LastName = "Zuelke";
+            await userClient.PostAsync(userInput);
+            httpClient.Dispose();
             Driver.Navigate().GoToUrl(new Uri(AppURL+"Gifts/"));
-           
+
             //Act
+            var rowsBefore = Driver.FindElements(By.CssSelector("tr"));
             Driver.FindElement(By.CssSelector("button[id='createNewGift']")).Click();
             string title = "Gift title";
             string desc = "Gift Desc";
@@ -107,9 +88,10 @@ namespace SecretSanta.Web.Tests
             Screenshot screenshot = ((ITakesScreenshot)Driver).GetScreenshot();
             screenshot.SaveAsFile("../../../giftScreenshot.png", ScreenshotImageFormat.Png);
             Thread.Sleep(4000);
+            var rowsAfter = Driver.FindElements(By.CssSelector("tr"));
 
             //Assert
-
+            Assert.AreEqual<int>(rowsAfter.Count - 1, rowsBefore.Count);
         }
 
         //public void EnterBingSearchText(string text)
