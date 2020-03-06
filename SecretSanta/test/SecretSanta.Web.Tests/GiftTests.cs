@@ -29,7 +29,7 @@ namespace SecretSanta.Web.Tests
         [NotNull]
         private IWebDriver? Driver { get; set; }
 
-        string AppURL { get; } = "https://localhost:44394/";
+        string AppURL { get; } = "https://localhost:5001/";
 
         [TestInitialize]
         public void TestInitialize()
