@@ -22,9 +22,15 @@ For this assignment we will be publishing our web application out to Azure.
 ## To submit in PR
 In the pull request include the following:
 - A link to your published API swagger page.
+https://apiszuelke.azurewebsites.net/swagger
 - A link to your published web site.
+https://webszuelke.azurewebsites.net/
 - A screenshot showing the Azure Resource Group with all resources.
+see azurescreenshot.png
+(couldn't copy and paste)
 - A screenshot showing the release pipeline that did the deployment.
+see pipelinescreenshot.png
+
 - Updated build pipeline yaml file.
 
 ## Documentation 
